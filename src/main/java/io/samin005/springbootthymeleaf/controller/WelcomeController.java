@@ -20,7 +20,6 @@ public class WelcomeController {
     public String main(Model model) {
         model.addAttribute("message", message);
         model.addAttribute("tasks", tasks);
-        System.out.println("YOLO");
         return "welcome"; //view
     }
 
