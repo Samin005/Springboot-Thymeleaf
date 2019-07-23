@@ -8,11 +8,17 @@
 <body>
 <div class="container">
     <h1>Add Pokemon:</h1>
-    <form class="form-inline">
-        <input placeholder="Dex no" class="form-control" type="number">
-        <input placeholder="Pokemon Name" class="form-control ml-2">
-        <input placeholder="Description" class="form-control mx-2">
-        <button class="btn btn-primary">Add Pokemon</button>
+    <form class="form-inline" action="#" th:action="@{/pokemons/add}" th:object="${pokemon}" method="post">
+        <label>
+            <input placeholder="Dex no" class="form-control" type="number" th:field="*{dexNo}">
+        </label>
+        <label>
+            <input placeholder="Pokemon Name" class="form-control ml-2" th:field="*{name}">
+        </label>
+        <label>
+            <input placeholder="Description" class="form-control mx-2" th:field="*{description}">
+        </label>
+        <button class="btn btn-primary" type="submit">Add Pokemon</button>
     </form>
 </div>
 

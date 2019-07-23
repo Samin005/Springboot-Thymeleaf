@@ -1,10 +1,10 @@
 package io.samin005.springbootthymeleaf.controller;
 
+import io.samin005.springbootthymeleaf.model.Pokemon;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +14,7 @@ public class WelcomeController {
 
     @Value("${welcome.message}")
     private String message;
-    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g");
+    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 
     @GetMapping("/")
     public String main(Model model) {
@@ -23,8 +23,18 @@ public class WelcomeController {
         return "welcome"; //view
     }
 
-    @RequestMapping("/pokemons/add")
-    public String addPokemon() {
+    @GetMapping("/pokemons/add")
+    public String addPokemon(Model model) {
+        model.addAttribute("pokemon", new Pokemon());
         return "addPokemon";
     }
+    @PostMapping("/pokemons/add")
+    public String addNewPokemon(@ModelAttribute Pokemon pokemon, Model model) {
+        System.out.println(pokemon.getName());
+        String status = "Added successfully!";
+        model.addAttribute("pokemon", pokemon);
+        model.addAttribute("status", status);
+        return "addPokemonResult";
+    }
+
 }
