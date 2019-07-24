@@ -1,6 +1,7 @@
 package io.samin005.springbootthymeleaf.controller;
 
 import io.samin005.springbootthymeleaf.model.Pokemon;
+import io.samin005.springbootthymeleaf.service.PokemonService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,11 @@ public class WelcomeController {
     @Value("${welcome.message}")
     private String message;
     private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
+    private PokemonService pokemonService;
+
+    public WelcomeController(PokemonService pokemonService) {
+        this.pokemonService = pokemonService;
+    }
 
     @GetMapping("/")
     public String main(Model model) {
@@ -31,7 +37,7 @@ public class WelcomeController {
     @PostMapping("/pokemons/add")
     public String addNewPokemon(@ModelAttribute Pokemon pokemon, Model model) {
         System.out.println(pokemon.getName());
-        String status = "Added successfully!";
+        String status = pokemonService.postPokemon(pokemon);
         model.addAttribute("pokemon", pokemon);
         model.addAttribute("status", status);
         return "addPokemonResult";
