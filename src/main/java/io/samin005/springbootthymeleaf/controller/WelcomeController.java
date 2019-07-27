@@ -5,8 +5,10 @@ import io.samin005.springbootthymeleaf.service.PokemonService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,12 +37,15 @@ public class WelcomeController {
         return "addPokemon";
     }
     @PostMapping("/pokemons/add")
-    public String addNewPokemon(@ModelAttribute Pokemon pokemon, Model model) {
-        System.out.println(pokemon.getName());
-        String status = pokemonService.postPokemon(pokemon);
-        model.addAttribute("pokemon", pokemon);
-        model.addAttribute("status", status);
-        return "addPokemonResult";
+    public String addNewPokemon(@Valid Pokemon pokemon, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "addPokemon";
+        } else {
+            String response = pokemonService.postPokemon(pokemon);
+            model.addAttribute("pokemon", pokemon);
+            model.addAttribute("response", response);
+            return "addPokemonResult";
+        }
     }
 
 }

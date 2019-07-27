@@ -1,8 +1,14 @@
 package io.samin005.springbootthymeleaf.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+
 public class Pokemon {
+    @Min(1)
     private int dexNo;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String description;
 
     public int getDexNo() {
