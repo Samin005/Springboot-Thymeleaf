@@ -8,18 +8,28 @@
 <body>
 <div class="container">
     <h1 th:text="${message}"></h1>
-    <button class="float-right btn btn-success" onclick="navigateToAddPokemon()">Add New Pokemon</button>
     <ul>
         <li th:each="task : ${tasks}" th:text="${task}"></li>
     </ul>
+    <button class="btn btn-success" onclick="navigateToAddPokemon()">Add New Pokemon</button>
+    <button class="btn btn-warning text-white" onclick="navigateToUpdatePokemon()">Update Pokemon</button>
+    <button class="btn btn-danger" onclick="navigateToDeletePokemon()">Delete Pokemon</button>
 </div>
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script src="../static/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 <script>
     function navigateToAddPokemon() {
         window.location.href = "/pokemons/add";
+    }
+
+    function navigateToUpdatePokemon() {
+        window.location.href = "/pokemons/update";
+    }
+
+    function navigateToDeletePokemon() {
+        window.location.href = "/pokemons/delete";
     }
 </script>
 </body>

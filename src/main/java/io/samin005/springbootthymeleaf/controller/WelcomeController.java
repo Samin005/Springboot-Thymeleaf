@@ -17,7 +17,7 @@ public class WelcomeController {
 
     @Value("${welcome.message}")
     private String message;
-    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
+    private List<String> tasks = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "k");
     private PokemonService pokemonService;
 
     public WelcomeController(PokemonService pokemonService) {
@@ -48,4 +48,13 @@ public class WelcomeController {
         }
     }
 
+    @GetMapping("/pokemons/update")
+    public String updatePokemon(){
+        return "updatePokemon";
+    }
+
+    @GetMapping("/pokemons/delete")
+    public String deletePokemon(){
+        return "deletePokemon";
+    }
 }
