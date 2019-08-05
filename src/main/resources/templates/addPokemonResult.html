@@ -5,8 +5,12 @@
     <title>Add pokemon result</title>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <style>
-        .responseText{
+        .responseTextSuccess{
             color: limegreen;
+            font-weight: bold;
+        }
+        .responseTextFailed{
+            color: red;
             font-weight: bold;
         }
     </style>
@@ -17,7 +21,8 @@
     <p th:text="'Pokedex No: ' + ${pokemon.dexNo}"></p>
     <p th:text="'Pokemon Name: ' + ${pokemon.name}"></p>
     <p th:text="'Pokemon Description: ' + ${pokemon.description}"></p>
-    <p th:text="${response}" class="responseText"></p>
+    <span th:if="${status} == '200 OK'"><p th:text="${response}" class="responseTextSuccess"></p></span>
+    <span th:unless="${status} == '200 OK'">Operation Failed!<p th:text="${response}" class="responseTextFailed"></p></span>
     <button class="btn btn-success" onclick="navigateToAddPokemon()">Add another Pokemon!</button>
 </div>
 

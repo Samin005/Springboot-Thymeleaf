@@ -1,6 +1,7 @@
 package io.samin005.springbootthymeleaf.controller;
 
 import io.samin005.springbootthymeleaf.model.Pokemon;
+import io.samin005.springbootthymeleaf.model.PokemonResponse;
 import io.samin005.springbootthymeleaf.service.PokemonService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +23,7 @@ public class PokemonController {
     }
 
     @GetMapping("/pokemons")
-    public String main(Model model) {
+    public String getPokemons(Model model) {
         model.addAttribute("pokemons", pokemons);
         return "pokemons"; //view
     }
@@ -38,9 +39,12 @@ public class PokemonController {
         if(bindingResult.hasErrors()) {
             return "addPokemon";
         } else {
-            String response = pokemonService.postPokemon(pokemon);
+            PokemonResponse pokemonResponse = pokemonService.postPokemon(pokemon);
+            String response = pokemonResponse.getResponse();
+            String status = pokemonResponse.getHttpStatus().toString();
             model.addAttribute("pokemon", pokemon);
             model.addAttribute("response", response);
+            model.addAttribute("status", status);
             return "addPokemonResult";
         }
     }
