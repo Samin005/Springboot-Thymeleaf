@@ -12,6 +12,7 @@
     </style>
 </head>
 <body>
+<div th:replace="fragments :: header"></div>
 <div class="container">
     <h1>Add Pokemon:</h1>
     <form class="form-inline" action="#" th:action="@{/pokemons/add}" th:object="${pokemon}" method="post">
@@ -57,7 +58,7 @@
         </table>
     </form>
 </div>
-
+<div th:replace="fragments :: footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 </body>
