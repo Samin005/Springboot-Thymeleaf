@@ -6,12 +6,6 @@
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}">
     <style>
-        ul {
-            columns: 3;
-            -webkit-columns: 3;
-            -moz-columns: 3;
-        }
-
         .speech-bubble {
             background: #efefef;
             -webkit-border-radius: 4px;
@@ -58,8 +52,8 @@
             <h3>Existing Pokemons:</h3>
         </div>
         <div class="col-6">
-            <ul class="mx-auto">
-                <li class="mr-3" th:each="pokemon : ${pokemons}" th:text="${pokemon}"></li>
+            <ul class="row">
+                <li class="col-sm-4" th:each="pokemon : ${pokemons}" th:text="${pokemon.name}"></li>
             </ul>
         </div>
         <div class="col-2"></div>

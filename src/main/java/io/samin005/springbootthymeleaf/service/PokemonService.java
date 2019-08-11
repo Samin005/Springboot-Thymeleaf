@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -36,5 +37,17 @@ public class PokemonService {
         pokemonResponse.setResponse(response);
         pokemonResponse.setHttpStatus(httpStatus);
         return pokemonResponse;
+    }
+
+    public List<Pokemon> getAllPokemons(){
+        List<Pokemon> allPokemons = null;
+        try{
+            HttpEntity<List> requestEntity = new HttpEntity<>(allPokemons);
+            ResponseEntity<List> responseEntity = new RestTemplate().exchange("http://localhost:8080/pokemons", HttpMethod.GET, requestEntity, List.class);
+            allPokemons = responseEntity.getBody();
+        } catch (Exception e){
+            LOGGER.log(Level.SEVERE, e.toString());
+        }
+        return allPokemons;
     }
 }

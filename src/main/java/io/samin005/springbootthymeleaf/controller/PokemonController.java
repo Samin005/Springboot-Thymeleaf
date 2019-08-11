@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class PokemonController {
     private PokemonService pokemonService;
-    private List<String> pokemons = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "k");
+//    private List<String> pokemonsString = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "k");
 
     public PokemonController(PokemonService pokemonService){
         this.pokemonService = pokemonService;
@@ -24,6 +24,7 @@ public class PokemonController {
 
     @GetMapping("/pokemons")
     public String getPokemons(Model model) {
+        List<Pokemon> pokemons = pokemonService.getAllPokemons();
         model.addAttribute("pokemons", pokemons);
         return "pokemons"; //view
     }

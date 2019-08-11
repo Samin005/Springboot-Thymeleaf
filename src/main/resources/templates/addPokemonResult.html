@@ -16,6 +16,7 @@
     </style>
 </head>
 <body>
+<div th:replace="fragments :: header"></div>
 <div class="container">
     <h1>Result:</h1>
     <p th:text="'Pokedex No: ' + ${pokemon.dexNo}"></p>
@@ -25,7 +26,7 @@
     <span th:unless="${status} == '200 OK'">Operation Failed!<p th:text="${response}" class="responseTextFailed"></p></span>
     <button class="btn btn-success" onclick="navigateToAddPokemon()">Add another Pokemon!</button>
 </div>
-
+<div th:replace="fragments :: footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 <script>
