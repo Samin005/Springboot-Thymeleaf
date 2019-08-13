@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Add pokemon result</title>
+    <title>Update pokemon result</title>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../static/css/stylesheet.css"  th:href="@{/css/stylesheet.css}">
 </head>
@@ -15,15 +15,15 @@
     <p th:text="'Pokemon Description: ' + ${pokemon.description}"></p>
     <span th:if="${httpStatus} == '200 OK' and ${status} == 'success'"><p th:text="${response}" class="successText"></p></span>
     <span th:if="${httpStatus} == '200 OK' and ${status} == 'warning'"><p th:text="${response}" class="warningText"></p></span>
-    <span th:if="${httpStatus} != '200 OK'">Operation Failed!<p th:text="${response}" class="errorText"></p></span>
-    <button class="btn btn-success" onclick="navigateToAddPokemon()">Add another Pokemon!</button>
+    <span th:if="${httpStatus} != '200 OK'">Operation Failed!<p th:text="${response}" class="errorText">error</p></span>
+    <button class="btn btn-warning text-white" onclick="navigateToUpdatePokemon()">Update another Pokemon!</button>
 </div>
 <div th:replace="fragments :: footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 <script>
-    function navigateToAddPokemon() {
-        window.location.href = "/pokemons/add";
+    function navigateToUpdatePokemon() {
+        window.location.href = "/pokemons/update";
     }
 </script>
 </body>

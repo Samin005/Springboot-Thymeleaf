@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,14 +18,32 @@ import java.util.logging.Logger;
 public class PokemonService {
 
     private Logger LOGGER = Logger.getLogger(PokemonService.class.getName());
+    private String url = "http://localhost:8080/pokemons";
+    private RestTemplate restTemplate = new RestTemplate();
+    private PokemonResponse pokemonResponse = new PokemonResponse();
+    private String response;
+    private String status;
+    private HttpStatus httpStatus;
+
+    public List getAllPokemons(){
+        List allPokemons = new ArrayList();
+        try{
+            HttpEntity<List> requestEntity = new HttpEntity<>(allPokemons);
+            ResponseEntity<List> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, List.class);
+            httpStatus = responseEntity.getStatusCode();
+            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            allPokemons = responseEntity.getBody();
+            LOGGER.info("RESPONSE: "+ (allPokemons != null ? allPokemons.toString() : null));
+        } catch (Exception e){
+            LOGGER.log(Level.SEVERE, e.toString());
+        }
+        return allPokemons;
+    }
 
     public PokemonResponse postPokemon(Pokemon pokemon){
-        PokemonResponse pokemonResponse = new PokemonResponse();
-        String response;
-        HttpStatus httpStatus;
         try{
             HttpEntity<Pokemon> pokemonHttpEntity = new HttpEntity<>(pokemon);
-            ResponseEntity<String> responseEntity = new RestTemplate().exchange("http://localhost:8080/pokemons", HttpMethod.POST, pokemonHttpEntity, String.class);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, pokemonHttpEntity, String.class);
             httpStatus = responseEntity.getStatusCode();
             LOGGER.info("HTTP STATUS: "+httpStatus.toString());
             response = responseEntity.getBody();
@@ -35,19 +54,41 @@ public class PokemonService {
             httpStatus = HttpStatus.GATEWAY_TIMEOUT;
         }
         pokemonResponse.setResponse(response);
+        if(response.equals("Pokemon '" + pokemon.getName() + "' added successfully!")){
+            status = "success";
+        } else if(response.equals("Pokemon '" + pokemon.getName() + "' with dex no " + pokemon.getDexNo() + " already existed and it was updated!")){
+            status = "warning";
+        } else {
+            status = "error";
+        }
+        pokemonResponse.setStatus(status);
         pokemonResponse.setHttpStatus(httpStatus);
         return pokemonResponse;
     }
 
-    public List<Pokemon> getAllPokemons(){
-        List<Pokemon> allPokemons = null;
+    public PokemonResponse updatePokemon(Pokemon pokemon){
         try{
-            HttpEntity<List> requestEntity = new HttpEntity<>(allPokemons);
-            ResponseEntity<List> responseEntity = new RestTemplate().exchange("http://localhost:8080/pokemons", HttpMethod.GET, requestEntity, List.class);
-            allPokemons = responseEntity.getBody();
+            HttpEntity<Pokemon> pokemonHttpEntity = new HttpEntity<>(pokemon);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, pokemonHttpEntity, String.class);
+            httpStatus = responseEntity.getStatusCode();
+            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            response = responseEntity.getBody();
+            LOGGER.info("RESPONSE: "+response);
         } catch (Exception e){
             LOGGER.log(Level.SEVERE, e.toString());
+            response = e.getMessage();
+            httpStatus = HttpStatus.GATEWAY_TIMEOUT;
         }
-        return allPokemons;
+        pokemonResponse.setResponse(response);
+        if(response.equals(pokemon.getName() + " with dex no " + pokemon.getDexNo() + " has been updated!")){
+            status = "success";
+        } else if(response.equals("Pokedex no " + pokemon.getDexNo() + " does not exist. Try a POST request.")){
+            status = "warning";
+        } else {
+            status = "error";
+        }
+        pokemonResponse.setStatus(status);
+        pokemonResponse.setHttpStatus(httpStatus);
+        return pokemonResponse;
     }
 }

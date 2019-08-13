@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -24,14 +23,15 @@ public class PokemonController {
 
     @GetMapping("/pokemons")
     public String getPokemons(Model model) {
-        List<Pokemon> pokemons = pokemonService.getAllPokemons();
+        List pokemons = pokemonService.getAllPokemons();
         model.addAttribute("pokemons", pokemons);
         return "pokemons"; //view
     }
 
     @GetMapping("/pokemons/add")
     public String addPokemon(Model model) {
-        model.addAttribute("pokemon", new Pokemon());
+        Pokemon pokemon = new Pokemon();
+        model.addAttribute("pokemon", pokemon);
         return "addPokemon";
     }
 
@@ -41,18 +41,37 @@ public class PokemonController {
             return "addPokemon";
         } else {
             PokemonResponse pokemonResponse = pokemonService.postPokemon(pokemon);
-            String response = pokemonResponse.getResponse();
-            String status = pokemonResponse.getHttpStatus().toString();
-            model.addAttribute("pokemon", pokemon);
-            model.addAttribute("response", response);
-            model.addAttribute("status", status);
+            mapModelResponse(pokemon, model, pokemonResponse);
             return "addPokemonResult";
         }
     }
 
+    private void mapModelResponse(@Valid Pokemon pokemon, Model model, PokemonResponse pokemonResponse) {
+        String response = pokemonResponse.getResponse();
+        String status = pokemonResponse.getStatus();
+        String httpStatus = pokemonResponse.getHttpStatus().toString();
+        model.addAttribute("pokemon", pokemon);
+        model.addAttribute("response", response);
+        model.addAttribute("status", status);
+        model.addAttribute("httpStatus", httpStatus);
+    }
+
     @GetMapping("/pokemons/update")
-    public String updatePokemon(){
+    public String updatePokemon(Model model){
+        Pokemon pokemon = new Pokemon();
+        model.addAttribute("pokemon", pokemon);
         return "updatePokemon";
+    }
+
+    @PostMapping("/pokemons/update")
+    public String updatePokemon(@Valid Pokemon pokemon, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "updatePokemon";
+        } else {
+            PokemonResponse pokemonResponse = pokemonService.updatePokemon(pokemon);
+            mapModelResponse(pokemon, model, pokemonResponse);
+            return "updatePokemonResult";
+        }
     }
 
     @GetMapping("/pokemons/delete")

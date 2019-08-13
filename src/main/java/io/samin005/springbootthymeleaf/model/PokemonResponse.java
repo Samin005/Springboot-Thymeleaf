@@ -4,14 +4,10 @@ import org.springframework.http.HttpStatus;
 
 public class PokemonResponse {
     private String response;
+    private String status;
     private HttpStatus httpStatus;
 
     public PokemonResponse() {
-    }
-
-    public PokemonResponse(String response, HttpStatus httpStatus) {
-        this.response = response;
-        this.httpStatus = httpStatus;
     }
 
     public String getResponse() {
@@ -20,6 +16,14 @@ public class PokemonResponse {
 
     public void setResponse(String response) {
         this.response = response;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public HttpStatus getHttpStatus() {

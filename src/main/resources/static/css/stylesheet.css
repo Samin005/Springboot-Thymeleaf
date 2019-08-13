@@ -1,0 +1,12 @@
+.errorText{
+    color: red;
+    font-weight: bold;
+}
+.successText{
+    color: limegreen;
+    font-weight: bold;
+}
+.warningText{
+    color: orange;
+    font-weight: bold;
+}
