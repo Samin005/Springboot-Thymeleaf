@@ -16,7 +16,7 @@
             <tr>
                 <td class="d-flex justify-content-start">
                     <label class="my-2">
-                        <input placeholder="Dex no" class="form-control" type="number" th:field="*{dexNo}" id="dexNo" required>
+                        <input placeholder="Dex no" class="form-control" type="number" th:field="*{dexNo}" id="pokemonDexNo" required>
                     </label>
                 </td>
                 <td class="errorText" th:if="${#fields.hasErrors('dexNo')}" th:errors="*{dexNo}">
@@ -26,7 +26,7 @@
             <tr>
                 <td>
                     <label class="my-2">
-                        <input placeholder="Pokemon Name" class="form-control w-100" th:field="*{name}">
+                        <input placeholder="Pokemon Name" class="form-control w-100" th:field="*{name}" id="pokemonName">
                     </label>
                 </td>
                 <td class="errorText"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
@@ -36,7 +36,7 @@
             <tr>
                 <td>
                     <label class="my-2">
-                        <input placeholder="Description" class="form-control w-100" th:field="*{description}">
+                        <input placeholder="Description" class="form-control w-100" th:field="*{description}" id="pokemonDescription">
                     </label>
                 </td>
                 <td class="errorText" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
@@ -48,7 +48,7 @@
                     <button class="btn btn-primary my-2" type="submit">Add Pokemon</button>
                 </td>
                 <td>
-                    <input class="btn btn-danger my-2" type="reset" value="Reset">
+                    <input class="btn btn-outline-danger my-2" type="button" value="Reset" onclick="resetButton()">
                 </td>
             </tr>
         </table>
@@ -60,8 +60,14 @@
 <script src="../static/js/font-awesome.min.js" th:src="@{/js/font-awesome.min.js}"></script>
 <script>
     $(document).ready(
-        $("#dexNo").val("")
-    )
+        $("#pokemonDexNo").val("")
+    );
+
+    function resetButton() {
+        $("#pokemonDexNo").val("");
+        $("#pokemonName").val("");
+        $("#pokemonDescription").val("");
+    }
 </script>
 </body>
 </html>

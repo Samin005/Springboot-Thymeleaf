@@ -16,7 +16,11 @@
             <tr>
                 <td class="d-flex justify-content-start">
                     <label class="my-2">
-                        <input placeholder="Dex no" class="form-control" type="number" th:field="*{dexNo}" id="dexNo" required>
+                        <select id="pokemonDexNo" class="form-control" th:field="*{dexNo}" onchange="setNameAndDescription(this)" required>
+                            <optgroup label="Dex No">
+                                <option th:each="currentPokemon: ${pokemonsList}" th:value="${currentPokemon.dexNo}" th:text="${currentPokemon.dexNo}"></option>
+                            </optgroup>
+                        </select>
                     </label>
                 </td>
                 <td class="errorText" th:if="${#fields.hasErrors('dexNo')}" th:errors="*{dexNo}">
@@ -26,7 +30,7 @@
             <tr>
                 <td>
                     <label class="my-2">
-                        <input placeholder="Pokemon Name" class="form-control w-100" th:field="*{name}">
+                        <input placeholder="Pokemon Name" class="form-control w-100" th:field="*{name}" id="pokemonName">
                     </label>
                 </td>
                 <td class="errorText"  th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
@@ -36,7 +40,7 @@
             <tr>
                 <td>
                     <label class="my-2">
-                        <input placeholder="Description" class="form-control w-100" th:field="*{description}">
+                        <input placeholder="Description" class="form-control w-100" th:field="*{description}" id="pokemonDescription">
                     </label>
                 </td>
                 <td class="errorText" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
@@ -48,15 +52,50 @@
                     <button class="btn btn-warning text-white my-2" type="submit">Update Pokemon</button>
                 </td>
                 <td>
-                    <input class="btn btn-danger my-2" type="reset" value="Reset">
+                    <input class="btn btn-outline-danger my-2" type="button" value="Reset" onclick="resetButton()">
                 </td>
             </tr>
         </table>
+        <div style="display: none;">
+            <div id="dexNos"><span th:each="p : ${pokemonsList}" th:text="${p.dexNo}+','"></span></div>
+            <div id="names"><span th:each="p : ${pokemonsList}" th:text="${p.name}+','"></span></div>
+            <div id="descriptions"><span th:each="p : ${pokemonsList}" th:text="${p.description}+','"></span></div>
+        </div>
     </form>
 </div>
 <div th:replace="fragments :: footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
 <script src="../static/js/font-awesome.min.js" th:src="@{/js/font-awesome.min.js}"></script>
+<script>
+    $(document).ready(function () {
+        $("#pokemonDexNo").val("");
+    });
+
+    function setNameAndDescription(pokemon) {
+        // var dexArray = stringToArray($("#dexNos").text());
+        var nameArray = stringToArray($("#names").text());
+        var descriptionArray = stringToArray($("#descriptions").text());
+        // console.log(dexArray);
+        // console.log(nameArray);
+        // console.log(descriptionArray);
+        // console.log(pokemon.selectedIndex);
+        $("#pokemonName").val(nameArray[pokemon.selectedIndex]);
+        $("#pokemonDescription").val(descriptionArray[pokemon.selectedIndex]);
+    }
+
+    function stringToArray(str) {
+        str = str.substring(0, str.length-1);
+        // str = str.replace(/\s/g,'');
+        return str.split(",");
+    }
+
+    function resetButton() {
+        $("#pokemonDexNo").val("");
+        $("#pokemonName").val("");
+        $("#pokemonDescription").val("");
+    }
+
+</script>
 </body>
 </html>

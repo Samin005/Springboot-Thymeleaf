@@ -46,20 +46,12 @@ public class PokemonController {
         }
     }
 
-    private void mapModelResponse(@Valid Pokemon pokemon, Model model, PokemonResponse pokemonResponse) {
-        String response = pokemonResponse.getResponse();
-        String status = pokemonResponse.getStatus();
-        String httpStatus = pokemonResponse.getHttpStatus().toString();
-        model.addAttribute("pokemon", pokemon);
-        model.addAttribute("response", response);
-        model.addAttribute("status", status);
-        model.addAttribute("httpStatus", httpStatus);
-    }
-
     @GetMapping("/pokemons/update")
     public String updatePokemon(Model model){
         Pokemon pokemon = new Pokemon();
+        List pokemonsList = pokemonService.getAllPokemons();
         model.addAttribute("pokemon", pokemon);
+        model.addAttribute("pokemonsList", pokemonsList);
         return "updatePokemon";
     }
 
@@ -75,7 +67,32 @@ public class PokemonController {
     }
 
     @GetMapping("/pokemons/delete")
-    public String deletePokemon(){
+    public String deletePokemon(Model model){
+        Pokemon pokemon = new Pokemon();
+        List pokemonsList = pokemonService.getAllPokemons();
+        model.addAttribute("pokemon", pokemon);
+        model.addAttribute("pokemonsList", pokemonsList);
         return "deletePokemon";
+    }
+
+    @PostMapping("/pokemons/delete")
+    public String deletePokemon(@Valid Pokemon pokemon, BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()) {
+            return "deletePokemon";
+        } else {
+            PokemonResponse pokemonResponse = pokemonService.updatePokemon(pokemon);
+            mapModelResponse(pokemon, model, pokemonResponse);
+            return "updatePokemonResult";
+        }
+    }
+
+    private void mapModelResponse(@Valid Pokemon pokemon, Model model, PokemonResponse pokemonResponse) {
+        String response = pokemonResponse.getResponse();
+        String status = pokemonResponse.getStatus();
+        String httpStatus = pokemonResponse.getHttpStatus().toString();
+        model.addAttribute("pokemon", pokemon);
+        model.addAttribute("response", response);
+        model.addAttribute("status", status);
+        model.addAttribute("httpStatus", httpStatus);
     }
 }
