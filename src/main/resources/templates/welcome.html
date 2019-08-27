@@ -5,6 +5,7 @@
     <title>Springboot-Thymeleaf</title>
     <link rel="stylesheet" href="../static/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}">
     <link rel="stylesheet" href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}">
+    <link rel="stylesheet" href="../static/css/stylesheet.css"  th:href="@{/css/stylesheet.css}">
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
@@ -18,7 +19,11 @@
             <button class="btn btn-primary" onclick="navigateToPokemons()">Let's Go!</button>
         </div>
     </div>
-    <div class="col-2"></div>
+    <div class="col-2">
+        <div class="float-right badge badge-danger mt-1" th:if="${connectionTestResponse} != 'Welcome!'">
+            Could not connect to Pokemon Server...
+        </div>
+    </div>
 </div>
 <div th:replace="fragments :: footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

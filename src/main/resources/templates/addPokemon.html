@@ -11,6 +11,9 @@
 <div th:replace="fragments :: header"></div>
 <div class="container">
     <h1>Add Pokemon:</h1>
+    <div class="float-right badge badge-danger mt-1" th:if="${connectionTestResponse} != 'Welcome!'">
+        Could not connect to Pokemon Server...
+    </div>
     <form class="form-inline d-flex justify-content-center" action="#" th:action="@{/pokemons/add}" th:object="${pokemon}" method="post">
         <table class="col-10">
             <tr>

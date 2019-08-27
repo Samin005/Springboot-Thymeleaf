@@ -23,6 +23,8 @@ public class PokemonController {
 
     @GetMapping("/pokemons")
     public String getPokemons(Model model) {
+        String connectionTestResponse = pokemonService.checkConnection();
+        model.addAttribute("connectionTestResponse", connectionTestResponse);
         List pokemons = pokemonService.getAllPokemons();
         model.addAttribute("pokemons", pokemons);
         return "pokemons"; //view
@@ -30,6 +32,8 @@ public class PokemonController {
 
     @GetMapping("/pokemons/add")
     public String addPokemon(Model model) {
+        String connectionTestResponse = pokemonService.checkConnection();
+        model.addAttribute("connectionTestResponse", connectionTestResponse);
         Pokemon pokemon = new Pokemon();
         model.addAttribute("pokemon", pokemon);
         return "addPokemon";
@@ -48,6 +52,8 @@ public class PokemonController {
 
     @GetMapping("/pokemons/update")
     public String updatePokemon(Model model){
+        String connectionTestResponse = pokemonService.checkConnection();
+        model.addAttribute("connectionTestResponse", connectionTestResponse);
         Pokemon pokemon = new Pokemon();
         List pokemonsList = pokemonService.getAllPokemons();
         model.addAttribute("pokemon", pokemon);
@@ -68,6 +74,8 @@ public class PokemonController {
 
     @GetMapping("/pokemons/delete")
     public String deletePokemon(Model model){
+        String connectionTestResponse = pokemonService.checkConnection();
+        model.addAttribute("connectionTestResponse", connectionTestResponse);
         Pokemon pokemon = new Pokemon();
         List pokemonsList = pokemonService.getAllPokemons();
         model.addAttribute("pokemon", pokemon);

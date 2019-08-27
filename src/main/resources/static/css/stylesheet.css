@@ -10,3 +10,6 @@
     color: orange;
     font-weight: bold;
 }
+.footerBackground{
+    background-color: rgba(240,240,240,.9);
+}

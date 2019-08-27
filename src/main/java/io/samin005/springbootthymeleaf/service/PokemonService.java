@@ -25,6 +25,22 @@ public class PokemonService {
     private String status;
     private HttpStatus httpStatus;
 
+    public String checkConnection(){
+        String response;
+        try{
+            HttpEntity<String> requestEntity = new HttpEntity<>("");
+            ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:8080/", HttpMethod.GET, requestEntity, String.class);
+            httpStatus = responseEntity.getStatusCode();
+            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            response = responseEntity.getBody();
+            LOGGER.info("RESPONSE: "+ response);
+        } catch (Exception e){
+            LOGGER.log(Level.SEVERE, e.toString());
+            response = e.getMessage();
+        }
+        return response;
+    }
+
     public List getAllPokemons(){
         List allPokemons = new ArrayList();
         try{
