@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 public class PokemonService {
 
     private Logger LOGGER = Logger.getLogger(PokemonService.class.getName());
-    private String url = "http://localhost:8080/pokemons";
+    private String url = "http://localhost:5000/pokemons";
     private RestTemplate restTemplate = new RestTemplate();
     private PokemonResponse pokemonResponse = new PokemonResponse();
     private String response;
@@ -29,7 +29,7 @@ public class PokemonService {
         String response;
         try{
             HttpEntity<String> requestEntity = new HttpEntity<>("");
-            ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:8080/", HttpMethod.GET, requestEntity, String.class);
+            ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:5000/", HttpMethod.GET, requestEntity, String.class);
             httpStatus = responseEntity.getStatusCode();
             LOGGER.info("HTTP STATUS: "+httpStatus.toString());
             response = responseEntity.getBody();
