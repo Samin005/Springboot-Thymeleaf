@@ -10,7 +10,7 @@
 </head>
 <body>
 <div th:replace="fragments :: header"></div>
-<div class="container">
+<div class="container marginBottom10">
     <h1>Delete Pokemon</h1>
     <div class="float-right badge badge-danger mt-1" th:if="${connectionTestResponse} != 'Welcome!'">
         Could not connect to Pokemon Server...
@@ -66,6 +66,24 @@
             <div id="descriptions"><span th:each="p : ${pokemonsList}" th:text="${p.description}+','"></span></div>
         </div>
     </form>
+    <table class="table mt-3">
+        <thead>
+        <tr>
+            <th scope="col">Dex No</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p : ${pokemonsList}">
+            <th scope="row" th:text="${p.dexNo}"></th>
+            <td th:text="${p.name}"></td>
+            <td th:text="${p.description}"></td>
+            <td><button class="btn btn-outline-danger" th:value="${p.dexNo} +'~'+ ${p.name} +'~'+ ${p.description}" onclick="editSelectedPokemon(this.value)"><i class="far fa-trash-alt"></i></button></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 <div th:replace="fragments :: footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
@@ -83,13 +101,8 @@
     });
 
     function setNameAndDescription(pokemon) {
-        // var dexArray = stringToArray($("#dexNos").text());
         var nameArray = stringToArray($("#names").text());
         var descriptionArray = stringToArray($("#descriptions").text());
-        // console.log(dexArray);
-        // console.log(nameArray);
-        // console.log(descriptionArray);
-        // console.log(pokemon.selectedIndex);
         $("#pokemonName").val(nameArray[pokemon.selectedIndex]);
         $("#pokemonDescription").val(descriptionArray[pokemon.selectedIndex]);
     }
@@ -104,6 +117,14 @@
         $("#pokemonDexNo").val("");
         $("#pokemonName").val("");
         $("#pokemonDescription").val("");
+    }
+
+    function editSelectedPokemon(selectedPokemon) {
+        console.log(selectedPokemon);
+        var selectedPokemonArray = selectedPokemon.split("~", 3);
+        $("#pokemonDexNo").val(selectedPokemonArray[0]);
+        $("#pokemonName").val(selectedPokemonArray[1]);
+        $("#pokemonDescription").val(selectedPokemonArray[2]);
     }
 
 </script>

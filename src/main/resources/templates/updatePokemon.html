@@ -88,7 +88,7 @@
             <th scope="row" th:text="${p.dexNo}"></th>
             <td th:text="${p.name}"></td>
             <td th:text="${p.description}"></td>
-            <td><button class="btn btn-outline-secondary" th:value="${p.dexNo} +','+ ${p.name} +','+ ${p.description}" onclick="editSelectedPokemon(this.value)"><i class="fas fa-pen-alt"></i></button></td>
+            <td><button class="btn btn-outline-secondary" th:value="${p.dexNo} +'~'+ ${p.name} +'~'+ ${p.description}" onclick="editSelectedPokemon(this.value)"><i class="far fa-edit"></i></button></td>
         </tr>
         </tbody>
     </table>
@@ -103,13 +103,8 @@
     });
 
     function setNameAndDescription(pokemon) {
-        // var dexArray = stringToArray($("#dexNos").text());
         var nameArray = stringToArray($("#names").text());
         var descriptionArray = stringToArray($("#descriptions").text());
-        // console.log(dexArray);
-        // console.log(nameArray);
-        // console.log(descriptionArray);
-        // console.log(pokemon.selectedIndex);
         $("#pokemonName").val(nameArray[pokemon.selectedIndex]);
         $("#pokemonDescription").val(descriptionArray[pokemon.selectedIndex]);
     }
@@ -128,7 +123,7 @@
 
     function editSelectedPokemon(selectedPokemon) {
         console.log(selectedPokemon);
-        var selectedPokemonArray = selectedPokemon.split(",", 3);
+        var selectedPokemonArray = selectedPokemon.split("~", 3);
         $("#pokemonDexNo").val(selectedPokemonArray[0]);
         $("#pokemonName").val(selectedPokemonArray[1]);
         $("#pokemonDescription").val(selectedPokemonArray[2]);

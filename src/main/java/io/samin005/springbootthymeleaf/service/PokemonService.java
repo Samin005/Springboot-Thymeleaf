@@ -107,4 +107,30 @@ public class PokemonService {
         pokemonResponse.setHttpStatus(httpStatus);
         return pokemonResponse;
     }
+
+    public PokemonResponse deletePokemon(Pokemon pokemon){
+        try{
+            HttpEntity<Pokemon> pokemonHttpEntity = new HttpEntity<>(pokemon);
+            ResponseEntity<String> responseEntity = restTemplate.exchange(url+"/delete/" + pokemon.getDexNo(), HttpMethod.DELETE, pokemonHttpEntity, String.class);
+            httpStatus = responseEntity.getStatusCode();
+            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            response = responseEntity.getBody();
+            LOGGER.info("RESPONSE: "+response);
+        } catch (Exception e){
+            LOGGER.log(Level.SEVERE, e.toString());
+            response = e.getMessage();
+            httpStatus = HttpStatus.GATEWAY_TIMEOUT;
+        }
+        pokemonResponse.setResponse(response);
+        if(response.equals("Pokemon with dex no " + pokemon.getDexNo() + " has been deleted!")){
+            status = "success";
+        } else if(response.equals("Pokedex no " + pokemon.getDexNo() + " does not exist.")){
+            status = "warning";
+        } else {
+            status = "error";
+        }
+        pokemonResponse.setStatus(status);
+        pokemonResponse.setHttpStatus(httpStatus);
+        return pokemonResponse;
+    }
 }

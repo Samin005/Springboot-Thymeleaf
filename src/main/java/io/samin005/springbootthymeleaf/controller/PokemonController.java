@@ -36,12 +36,18 @@ public class PokemonController {
         model.addAttribute("connectionTestResponse", connectionTestResponse);
         Pokemon pokemon = new Pokemon();
         model.addAttribute("pokemon", pokemon);
+        List pokemonsList = pokemonService.getAllPokemons();
+        model.addAttribute("pokemonsList", pokemonsList);
         return "addPokemon";
     }
 
     @PostMapping("/pokemons/add")
     public String addNewPokemon(@Valid Pokemon pokemon, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
+            String connectionTestResponse = pokemonService.checkConnection();
+            model.addAttribute("connectionTestResponse", connectionTestResponse);
+            List pokemonsList = pokemonService.getAllPokemons();
+            model.addAttribute("pokemonsList", pokemonsList);
             return "addPokemon";
         } else {
             PokemonResponse pokemonResponse = pokemonService.postPokemon(pokemon);
@@ -64,6 +70,10 @@ public class PokemonController {
     @PostMapping("/pokemons/update")
     public String updatePokemon(@Valid Pokemon pokemon, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
+            String connectionTestResponse = pokemonService.checkConnection();
+            model.addAttribute("connectionTestResponse", connectionTestResponse);
+            List pokemonsList = pokemonService.getAllPokemons();
+            model.addAttribute("pokemonsList", pokemonsList);
             return "updatePokemon";
         } else {
             PokemonResponse pokemonResponse = pokemonService.updatePokemon(pokemon);
@@ -86,11 +96,15 @@ public class PokemonController {
     @PostMapping("/pokemons/delete")
     public String deletePokemon(@Valid Pokemon pokemon, BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()) {
+            String connectionTestResponse = pokemonService.checkConnection();
+            model.addAttribute("connectionTestResponse", connectionTestResponse);
+            List pokemonsList = pokemonService.getAllPokemons();
+            model.addAttribute("pokemonsList", pokemonsList);
             return "deletePokemon";
         } else {
-            PokemonResponse pokemonResponse = pokemonService.updatePokemon(pokemon);
+            PokemonResponse pokemonResponse = pokemonService.deletePokemon(pokemon);
             mapModelResponse(pokemon, model, pokemonResponse);
-            return "updatePokemonResult";
+            return "deletePokemonResult";
         }
     }
 
