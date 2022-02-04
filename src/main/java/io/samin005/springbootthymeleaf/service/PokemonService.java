@@ -17,10 +17,10 @@ import java.util.logging.Logger;
 @Service
 public class PokemonService {
 
-    private Logger LOGGER = Logger.getLogger(PokemonService.class.getName());
-    private String url = "http://localhost:5000/pokemons";
-    private RestTemplate restTemplate = new RestTemplate();
-    private PokemonResponse pokemonResponse = new PokemonResponse();
+    private final Logger LOGGER = Logger.getLogger(PokemonService.class.getName());
+    private final String url = "http://localhost:5000/pokemons";
+    private final RestTemplate restTemplate = new RestTemplate();
+    private final PokemonResponse pokemonResponse = new PokemonResponse();
     private String response;
     private String status;
     private HttpStatus httpStatus;
@@ -31,7 +31,7 @@ public class PokemonService {
             HttpEntity<String> requestEntity = new HttpEntity<>("");
             ResponseEntity<String> responseEntity = restTemplate.exchange("http://localhost:5000/", HttpMethod.GET, requestEntity, String.class);
             httpStatus = responseEntity.getStatusCode();
-            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            LOGGER.info("HTTP STATUS: "+httpStatus);
             response = responseEntity.getBody();
             LOGGER.info("RESPONSE: "+ response);
         } catch (Exception e){
@@ -47,7 +47,7 @@ public class PokemonService {
             HttpEntity<List> requestEntity = new HttpEntity<>(allPokemons);
             ResponseEntity<List> responseEntity = restTemplate.exchange(url, HttpMethod.GET, requestEntity, List.class);
             httpStatus = responseEntity.getStatusCode();
-            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            LOGGER.info("HTTP STATUS: "+httpStatus);
             allPokemons = responseEntity.getBody();
             LOGGER.info("RESPONSE: "+ (allPokemons != null ? allPokemons.toString() : null));
         } catch (Exception e){
@@ -61,7 +61,7 @@ public class PokemonService {
             HttpEntity<Pokemon> pokemonHttpEntity = new HttpEntity<>(pokemon);
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.POST, pokemonHttpEntity, String.class);
             httpStatus = responseEntity.getStatusCode();
-            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            LOGGER.info("HTTP STATUS: "+httpStatus);
             response = responseEntity.getBody();
             LOGGER.info("RESPONSE: "+response);
         } catch (Exception e){
@@ -87,7 +87,7 @@ public class PokemonService {
             HttpEntity<Pokemon> pokemonHttpEntity = new HttpEntity<>(pokemon);
             ResponseEntity<String> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, pokemonHttpEntity, String.class);
             httpStatus = responseEntity.getStatusCode();
-            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            LOGGER.info("HTTP STATUS: "+httpStatus);
             response = responseEntity.getBody();
             LOGGER.info("RESPONSE: "+response);
         } catch (Exception e){
@@ -113,7 +113,7 @@ public class PokemonService {
             HttpEntity<Pokemon> pokemonHttpEntity = new HttpEntity<>(pokemon);
             ResponseEntity<String> responseEntity = restTemplate.exchange(url+"/delete/" + pokemon.getDexNo(), HttpMethod.DELETE, pokemonHttpEntity, String.class);
             httpStatus = responseEntity.getStatusCode();
-            LOGGER.info("HTTP STATUS: "+httpStatus.toString());
+            LOGGER.info("HTTP STATUS: "+httpStatus);
             response = responseEntity.getBody();
             LOGGER.info("RESPONSE: "+response);
         } catch (Exception e){

@@ -13,10 +13,10 @@
     <p th:text="'Pokedex No: ' + ${pokemon.dexNo}"></p>
     <p th:text="'Pokemon Name: ' + ${pokemon.name}"></p>
     <p th:text="'Pokemon Description: ' + ${pokemon.description}"></p>
-    <span th:if="${httpStatus} == '200 OK' and ${status} == 'success'"><p th:text="${response}" class="successText"></p></span>
-    <span th:if="${httpStatus} == '200 OK' and ${status} == 'warning'"><p th:text="${response}" class="warningText"></p></span>
-    <span th:if="${httpStatus} != '200 OK'">Operation Failed!<p th:text="${response}" class="errorText"></p></span>
-    <button class="btn btn-success" onclick="navigateToAddPokemon()">Add another Pokemon!</button>
+    <div th:if="${httpStatus} == '200 OK' and ${status} == 'success'"><div th:text="${response}" class="successText"></div></div>
+    <div th:if="${httpStatus} == '200 OK' and ${status} == 'warning'"><div th:text="${response}" class="warningText"></div></div>
+    <div th:if="${httpStatus} != '200 OK'">Operation Failed!<span th:text="${response}" class="errorText"></span></div>
+    <button class="btn btn-success" onclick="navigateToAddPokemon()">Add another Pokémon!</button>
 </div>
 <div th:replace="fragments :: footer"></div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

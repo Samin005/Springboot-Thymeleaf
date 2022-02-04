@@ -10,11 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @Controller
 public class PokemonController {
-    private PokemonService pokemonService;
+    private final PokemonService pokemonService;
 //    private List<String> pokemonsString = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "k");
 
     public PokemonController(PokemonService pokemonService){
@@ -25,8 +24,7 @@ public class PokemonController {
     public String getPokemons(Model model) {
         String connectionTestResponse = pokemonService.checkConnection();
         model.addAttribute("connectionTestResponse", connectionTestResponse);
-        List pokemons = pokemonService.getAllPokemons();
-        model.addAttribute("pokemons", pokemons);
+        model.addAttribute("pokemons", pokemonService.getAllPokemons());
         return "pokemons"; //view
     }
 
@@ -36,8 +34,7 @@ public class PokemonController {
         model.addAttribute("connectionTestResponse", connectionTestResponse);
         Pokemon pokemon = new Pokemon();
         model.addAttribute("pokemon", pokemon);
-        List pokemonsList = pokemonService.getAllPokemons();
-        model.addAttribute("pokemonsList", pokemonsList);
+        model.addAttribute("pokemonsList", pokemonService.getAllPokemons());
         return "addPokemon";
     }
 
@@ -46,8 +43,7 @@ public class PokemonController {
         if(bindingResult.hasErrors()) {
             String connectionTestResponse = pokemonService.checkConnection();
             model.addAttribute("connectionTestResponse", connectionTestResponse);
-            List pokemonsList = pokemonService.getAllPokemons();
-            model.addAttribute("pokemonsList", pokemonsList);
+            model.addAttribute("pokemonsList", pokemonService.getAllPokemons());
             return "addPokemon";
         } else {
             PokemonResponse pokemonResponse = pokemonService.postPokemon(pokemon);
@@ -61,9 +57,8 @@ public class PokemonController {
         String connectionTestResponse = pokemonService.checkConnection();
         model.addAttribute("connectionTestResponse", connectionTestResponse);
         Pokemon pokemon = new Pokemon();
-        List pokemonsList = pokemonService.getAllPokemons();
         model.addAttribute("pokemon", pokemon);
-        model.addAttribute("pokemonsList", pokemonsList);
+        model.addAttribute("pokemonsList", pokemonService.getAllPokemons());
         return "updatePokemon";
     }
 
@@ -72,8 +67,7 @@ public class PokemonController {
         if(bindingResult.hasErrors()) {
             String connectionTestResponse = pokemonService.checkConnection();
             model.addAttribute("connectionTestResponse", connectionTestResponse);
-            List pokemonsList = pokemonService.getAllPokemons();
-            model.addAttribute("pokemonsList", pokemonsList);
+            model.addAttribute("pokemonsList", pokemonService.getAllPokemons());
             return "updatePokemon";
         } else {
             PokemonResponse pokemonResponse = pokemonService.updatePokemon(pokemon);
@@ -87,9 +81,8 @@ public class PokemonController {
         String connectionTestResponse = pokemonService.checkConnection();
         model.addAttribute("connectionTestResponse", connectionTestResponse);
         Pokemon pokemon = new Pokemon();
-        List pokemonsList = pokemonService.getAllPokemons();
         model.addAttribute("pokemon", pokemon);
-        model.addAttribute("pokemonsList", pokemonsList);
+        model.addAttribute("pokemonsList", pokemonService.getAllPokemons());
         return "deletePokemon";
     }
 
@@ -98,8 +91,7 @@ public class PokemonController {
         if(bindingResult.hasErrors()) {
             String connectionTestResponse = pokemonService.checkConnection();
             model.addAttribute("connectionTestResponse", connectionTestResponse);
-            List pokemonsList = pokemonService.getAllPokemons();
-            model.addAttribute("pokemonsList", pokemonsList);
+            model.addAttribute("pokemonsList", pokemonService.getAllPokemons());
             return "deletePokemon";
         } else {
             PokemonResponse pokemonResponse = pokemonService.deletePokemon(pokemon);
